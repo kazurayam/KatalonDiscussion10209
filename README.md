@@ -27,4 +27,51 @@ I would introduce to you [Materials], a java/groovy library that resolves output
 
 ## How to run the demo
 
-  
+1. download the zip of this project from [releases](https://github.com/katalon-studio-samples/jira-api-tests) page.
+2. unzip it. You will obtain a folder named `KatalonDiscussion10209`.
+3. start your Katalon studio, and open the project
+4. open a Test Suite named `Test Suites/TS_Materials_applied` and run it.
+5. you should run it multiple times. e.g., try 3 times.
+
+## What the test does
+
+This project is based on the [katalon-studio-samples/jira-api-tests](https://github.com/katalon-studio-samples/jira-api-tests) project.
+
+The `Test Suites/TS_Materials_applied` executes [`Test Cases/Simple examples/api-2-issue/Get issue/Get an issue by Key - 1 - Materialized`](/Scripts/Simple%20examples/api-2-issue/Get%20issue/Get%20an%20issue%20by%20Key%20-%201%20-%20Materialized/Script1539828822545.groovy)
+
+This test case send a HTTP GET request to a RESTFul URL  https://katalon.atlassian.net/rest/api/2/issue/KD-1000?expand=names&fields=summary,status,issuetype,assignee,project,priority,description&= . The test case makes a bit of assertions over the response. And it writes the HTTP Response Headers and Body into files on local disk in JSON format.
+
+## output
+
+By running `Test Suites/TS_Materials_applied`, a new folder `<projectDir>/Materials` will be created. In there you can find a folder tree and a HTML file named `index.html`.
+
+![Materials_index](docs/images/Materials_index.png)
+
+You can browse the index.html. It will look like this:
+
+![index_html](docs/images/index_html.png)
+
+In the index you will find as many records of test suite runs as you executed. In the above screenshot, you can find 3 times of test suite run recorded.
+
+Each test suite run contains a record of test case run, which contains links to the files created.
+
+By clicking the links, you can view the files in modal widdow. Here is `headers.json`:
+
+![headers_json](docs/images/headers_json.PNG)
+
+Here is `body.json`:
+
+![body_json](docs/images/body_json.PNG)
+
+## Path format
+
+The created files has a path like this:
+```${projectDir}/Materials/${testSuiteName}/${testSuiteTimestamp}/${testCaseName}/${subdirs}/${fileName}
+```
+
+For example:
+
+```./Materials/TS_Materials_applied/20181018_140249/Simple examples.api-2-issue.Get issue.Get an issue by Key - 1 - Materialized/header.json
+```
+
+Please note that this folder tree contains a timestamp layer `yyyyMMdd_hhmmss`. Having a timestamp layer enables you to retain outputs as long as you require until you delete them intentionally. This chronological folder structure is best fit for logging purpose.
