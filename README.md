@@ -92,12 +92,14 @@ Here is `body.json`:
 ## Path format
 
 The created files has a path like this:
-```${projectDir}/Materials/${testSuiteName}/${testSuiteTimestamp}/${testCaseName}/${subdirs}/${fileName}
+```
+${projectDir}/Materials/${testSuiteName}/${testSuiteTimestamp}/${testCaseName}/${subdirs}/${fileName}
 ```
 
-For example:
+A concrete path example:
 
-```./Materials/TS_Materials_applied/20181018_140249/Simple examples.api-2-issue.Get issue.Get an issue by Key - 1 - Materialized/header.json
+```
+./Materials/TS_Materials_applied/20181018_140249/Simple examples.api-2-issue.Get issue.Get an issue by Key - 1 - Materialized/header.json
 ```
 
-Please note that this folder tree contains a timestamp layer `yyyyMMdd_hhmmss`. Having a timestamp layer enables you to retain outputs as long as you require until you delete them intentionally. This chronological folder structure is best fit for logging purpose.
+Please note that this folder tree contains a timestamp layer `yyyyMMdd_hhmmss`. *Having a timestamp layer enables you to retain outputs as long as you like until you intensionally delete them. This chronological folder structure is best fit for logging purpose.*
