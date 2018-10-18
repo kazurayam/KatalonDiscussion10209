@@ -36,9 +36,10 @@ int status = response.getStatusCode()
 path1.toFile().append("${status}", 'utf-8')
 
 // store the HTTP Response Headers into file
-Path path2 = mr.resolveMaterialPath(GlobalVariable.CURRENT_TESTCASE_ID, "headers.txt")
+Path path2 = mr.resolveMaterialPath(GlobalVariable.CURRENT_TESTCASE_ID, "headers.json")
 Map<String, List<String>> headerFields = response.getHeaderFields()
-path2.toFile().append(headerFields.toString(), 'utf-8')
+String headersJson = CustomKeywords.'com.kazurayam.ksbackyard.WebServiceTestSupport.convertHeaderFieldsToJsonString'(headerFields)
+path2.toFile().append(headersJson, 'utf-8')
 
 // store the HTTP Response Body into file
 Path path3 = mr.resolveMaterialPath(GlobalVariable.CURRENT_TESTCASE_ID, "body.json")
