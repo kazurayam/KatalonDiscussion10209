@@ -24,16 +24,9 @@ WS.verifyElementPropertyValue(response, 'fields.summary', 'REST - Create new RES
 
 WS.verifyElementPropertyValue(response, 'fields.description', 'As a Katalon user, I want to create a new RESTful test, so that I can ensure that my APIs work correctly.\r\n\r\nAC1 - Ability to create RESTful test using single end-point\r\nAC2 - Ability to import RESTful end-points from Swagger')
 
-
-
 // The following lines are inserted by kazurayam
 // make MaterialRepository accessible
 MaterialRepository mr = (MaterialRepository)GlobalVariable.MATERIAL_REPOSITORY
-
-// store HTTP status
-Path path1 = mr.resolveMaterialPath(GlobalVariable.CURRENT_TESTCASE_ID, "status.txt")
-int status = response.getStatusCode()
-path1.toFile().append("${status}", 'utf-8')
 
 // store the HTTP Response Headers into file
 Path path2 = mr.resolveMaterialPath(GlobalVariable.CURRENT_TESTCASE_ID, "headers.json")

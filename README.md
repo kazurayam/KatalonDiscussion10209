@@ -30,7 +30,7 @@ ${projectDir}/Materials/${testSuiteName}/${testSuiteTimestamp}/${testCaseName}/$
 
 ## How to run the demo
 
-1. download the zip of this project from [releases](https://github.com/katalon-studio-samples/jira-api-tests) page.
+1. download the zip of this project from [releases](https://github.com/katalon-studio-samples/jira-api-tests/releases) page.
 2. unzip it. You will obtain a folder named `KatalonDiscussion10209`.
 3. start your Katalon studio, and open the project
 4. open a Test Suite named `Test Suites/TS_Materials_applied` and run it.
@@ -38,7 +38,7 @@ ${projectDir}/Materials/${testSuiteName}/${testSuiteTimestamp}/${testCaseName}/$
 
 ## What the test does
 
-This project is based on the [katalon-studio-samples/jira-api-tests](https://github.com/katalon-studio-samples/jira-api-tests) project.
+This project is based on the [katalon-studio-samples/jira-api-tests](https://github.com/katalon-studio-samples/jira-api-tests) project. I added a few codes on it without changing files of the original project.
 
 The `Test Suites/TS_Materials_applied` executes [`Test Cases/Simple examples/api-2-issue/Get issue/Get an issue by Key - 1 - Materialized`](/Scripts/Simple%20examples/api-2-issue/Get%20issue/Get%20an%20issue%20by%20Key%20-%201%20-%20Materialized/Script1539828822545.groovy). The test case code looks like this:
 
@@ -50,11 +50,6 @@ response = WS.sendRequest(findTestObject('Simple examples/api-2-issue/Get issue/
 WS.verifyResponseStatusCode(response, 200)
 // make MaterialRepository accessible
 MaterialRepository mr = (MaterialRepository)GlobalVariable.MATERIAL_REPOSITORY
-
-// store HTTP status
-Path path1 = mr.resolveMaterialPath(GlobalVariable.CURRENT_TESTCASE_ID, "status.txt")
-int status = response.getStatusCode()
-path1.toFile().append("${status}", 'utf-8')
 
 // store the HTTP Response Headers into file
 Path path2 = mr.resolveMaterialPath(GlobalVariable.CURRENT_TESTCASE_ID, "headers.json")
@@ -118,6 +113,6 @@ Here I would describe, step by step, for you how to recreate a Katalon Studio pr
 4. Create a Test Listener in your project, and copy & paste the source of [Tests](Test%20Listeners/Tests.groovy). You need not change it at all. If you have your own test listener, then carefully edit it so that your test listener works similar to the `Tests`.
 5. Add a test case named `Test Cases/cleanMaterials` in your project. Copy and paste the source of [`Test Cases/clearMaterials`](Scripts/clearMaterials/Script1539827008519.groovy). You need not to change the code at all.
 6. Add a test case name `Test Cases/makeIndex` in your project. Copy and paste the source of [`Test Cases/makeIndex`](Scripts/makeIndex/Script1539827017814.groovy). You need not to change the code at all.
-7. Now you add your own test case which actually test your target Web Services. Refer to [Test Cases/Simple examples/api-2-issue/Get issue/Get an issue by Key - 1 - Materialized](Scripts/Simple%20examples/api-2-issue/Get%20issue/Get%20an issue%20by%20Key%20-%201%20-%20Materialized/Script1539828822545.groovy) as an example.
+7. Now you add your own test case which actually test your target Web Services. Refer to [Test Cases/Simple examples/api-2-issue/Get issue/Get an issue by Key - 1 - Materialized](Scripts/Simple%20examples/api-2-issue/Get%20issue/Get%20an%20issue%20by%20Key%20-%201%20-%20Materialized/Script1539828822545.groovy) as an example.
 8. Add a test suite which calls 3 test cases --- `cleanMaterials`, *your own test case* and `makeIndex`. ![TestSuite](docs/images/TestSuite.PNG) . The test suite can have any name you like.
 9. In the definiton of test suite, there is a row labeled `Run`. In the Run row, there are toggle controls. You can choose each test cases to run or not. If you toggle on the `cleanMaterials` test case, then the `./Materials` directory will be cleaned every time when the test suite runs. If you toggle off, then you can see multiple records of test sute runs accumulated in the index.html viewer.
