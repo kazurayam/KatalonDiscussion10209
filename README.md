@@ -103,3 +103,18 @@ A concrete path example:
 ```
 
 Please note that this folder tree contains a timestamp layer `yyyyMMdd_hhmmss`. *Having a timestamp layer enables you to retain outputs as long as you like until you intensionally delete them. This chronological folder structure is best fit for logging purpose.*
+
+
+## How to reproduce a Materials-enabled project for your self
+
+Here I would describe, step by step, for you how to recreate a Katalon Studio project which has the Materials library builting and enabled.
+
+1. create a new katalon project, or clone some existing project. For example, clone the [katalon-studio-samples/jira-api-tests](https://github.com/katalon-studio-samples/jira-api-tests) project.
+2. import Materials-0.22.0.jar or heigher into your katalon project. Refer to the Katalon documentation ['Import Java library'](https://docs.katalon.com/katalon-studio/tutorials/import_java_library.html) for operation instruction. You can download jar from [release](https://github.com/kazurayam/Materials/releases) page. Or you can reuse the [jar already imported into this project](Drivers/). ![ExternalLibraies](docs/images/ExternalLibraries.PNG)
+3. Edit Profiles > default in your project. Add `MATERIALS_REPOSITORY` with type Null. Add `CURRENT_TESTCASE_ID` with type String. ![Profiles_default](docs/images/Profiles_default.PNG)
+4. Create a Test Listener in your project, and copy & paste the source of [Tests](Test%20Listeners/Tests.groovy). You need not change it at all. If you have your own test listener, then carefully edit it so that your test listener works similar to the `Tests`.
+5. Add a test case named `Test Cases/cleanMaterials` in your project. Copy and paste the source of [`Test Cases/clearMaterials`](Scripts/clearMaterials/Script1539827008519.groovy). You need not to change the code at all.
+6. Add a test case name `Test Cases/makeIndex` in your project. Copy and paste the source of [`Test Cases/makeIndex`](Scripts/makeIndex/Script1539827017814.groovy). You need not to change the code at all.
+7. Now you add your own test case which actually test your target Web Services. Refer to [Test Cases/Simple examples/api-2-issue/Get issue/Get an issue by Key - 1 - Materialized](Scripts/Simple%20examples/api-2-issue/Get%20issue/Get%20an issue%20by%20Key%20-%201%20-%20Materialized/Script1539828822545.groovy) as an example.
+8. Add a test suite which calls 3 test cases --- `cleanMaterials`, *your own test case* and `makeIndex`. ![TestSuite](docs/images/TestSuite.PNG) . The test suite can have any name you like.
+9. In the definiton of test suite, there is a row labeled `Run`. In the Run row, there are toggle controls. You can choose each test cases to run or not. If you toggle on the `cleanMaterials` test case, then the `./Materials` directory will be cleaned every time when the test suite runs. If you toggle off, then you can see multiple records of test sute runs accumulated in the index.html viewer.
