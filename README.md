@@ -20,10 +20,10 @@ This project was developed to propose a solution to a discussion in Katalon Foru
 
 ## Solution
 
-I would introduce to you [Materials], a java/groovy library that resolves output file paths in a well-structured format. The  [`com.kazurayam.materials.MaterialRepository`] provides convinient methods with which I can solve the above-mensioned problems easily.
+I would introduce to you [Materials](https://github.com/kazurayam/Materials), a java/groovy library that resolves output file paths in a well-structured format. The  `com.kazurayam.materials.MaterialRepository` class provides convenient methods with which I can solve the above-mensioned problems easily.
 
-1. [`resolveMaterialPath(String testCaseId, String fileName)`] method returs `java.nio.file.Path` object for a File to be created.
-2. [`makeIndex()`] method generates the `./Materials/index.html` file.
+1. `resolveMaterialPath(String testCaseId, String fileName)` method returns `java.nio.file.Path` object for a File to be created.
+2. `makeIndex()` method generates the `./Materials/index.html` file.
 
 ## How to run the demo
 
@@ -37,7 +37,33 @@ I would introduce to you [Materials], a java/groovy library that resolves output
 
 This project is based on the [katalon-studio-samples/jira-api-tests](https://github.com/katalon-studio-samples/jira-api-tests) project.
 
-The `Test Suites/TS_Materials_applied` executes [`Test Cases/Simple examples/api-2-issue/Get issue/Get an issue by Key - 1 - Materialized`](/Scripts/Simple%20examples/api-2-issue/Get%20issue/Get%20an%20issue%20by%20Key%20-%201%20-%20Materialized/Script1539828822545.groovy)
+The `Test Suites/TS_Materials_applied` executes [`Test Cases/Simple examples/api-2-issue/Get issue/Get an issue by Key - 1 - Materialized`](/Scripts/Simple%20examples/api-2-issue/Get%20issue/Get%20an%20issue%20by%20Key%20-%201%20-%20Materialized/Script1539828822545.groovy). The test case code looks like this:
+
+```
+// Send the request and get the response
+response = WS.sendRequest(findTestObject('Simple examples/api-2-issue/Get issue/Get an issue by Key'))
+
+// Verify the response
+WS.verifyResponseStatusCode(response, 200)
+// make MaterialRepository accessible
+MaterialRepository mr = (MaterialRepository)GlobalVariable.MATERIAL_REPOSITORY
+
+// store HTTP status
+Path path1 = mr.resolveMaterialPath(GlobalVariable.CURRENT_TESTCASE_ID, "status.txt")
+int status = response.getStatusCode()
+path1.toFile().append("${status}", 'utf-8')
+
+// store the HTTP Response Headers into file
+Path path2 = mr.resolveMaterialPath(GlobalVariable.CURRENT_TESTCASE_ID, "headers.json")
+Map<String, List<String>> headerFields = response.getHeaderFields()
+String headersJson = CustomKeywords.'com.kazurayam.ksbackyard.WebServiceTestSupport.convertHeaderFieldsToJsonString'(headerFields)
+path2.toFile().append(headersJson, 'utf-8')
+
+// store the HTTP Response Body into file
+Path path3 = mr.resolveMaterialPath(GlobalVariable.CURRENT_TESTCASE_ID, "body.json")
+String body = response.getResponseBodyContent()
+path3.toFile().append(body, 'utf-8')
+```
 
 This test case send a HTTP GET request to a RESTFul URL  https://katalon.atlassian.net/rest/api/2/issue/KD-1000?expand=names&fields=summary,status,issuetype,assignee,project,priority,description&= . The test case makes a bit of assertions over the response. And it writes the HTTP Response Headers and Body into files on local disk in JSON format.
 
