@@ -30,13 +30,17 @@ WS.verifyElementPropertyValue(response, 'fields.description', 'As a Katalon user
 // make MaterialRepository accessible
 MaterialRepository mr = (MaterialRepository)GlobalVariable.MATERIAL_REPOSITORY
 
+// store HTTP status
+Path path1 = mr.resolveMaterialPath(GlobalVariable.CURRENT_TESTCASE_ID, "status.txt")
+int status = response.getStatusCode()
+path1.toFile().append("${status}", 'utf-8')
+
 // store the HTTP Response Headers into file
-Path path1 = mr.resolveMaterialPath(GlobalVariable.CURRENT_TESTCASE_ID, "headers.txt")
-String headers = "Hello: World"
-path1.toFile().append(headers, 'utf-8')
+Path path2 = mr.resolveMaterialPath(GlobalVariable.CURRENT_TESTCASE_ID, "headers.txt")
+Map<String, List<String>> headerFields = response.getHeaderFields()
+path2.toFile().append(headerFields.toString(), 'utf-8')
 
 // store the HTTP Response Body into file
-Path path2 = mr.resolveMaterialPath(GlobalVariable.CURRENT_TESTCASE_ID, "body.json")
-def json = JsonOutput.toJson([name: 'John Doe', age: 42])
-def jsonPP = JsonOutput.prettyPrint(json)
-path2.toFile().append(jsonPP, 'utf-8')
+Path path3 = mr.resolveMaterialPath(GlobalVariable.CURRENT_TESTCASE_ID, "body.json")
+String body = response.getResponseBodyContent()
+path3.toFile().append(body, 'utf-8')
