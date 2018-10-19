@@ -5,7 +5,6 @@ import java.nio.file.Path
 import com.kazurayam.materials.MaterialRepository
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 
-import groovy.json.JsonOutput
 import internal.GlobalVariable as GlobalVariable
 
 // Send the request and get the response
